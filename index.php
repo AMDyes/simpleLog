@@ -84,17 +84,17 @@ echo "<pre>";
 $ym      = date('Ym');
 $day     = date('d');
 $url     = current($arr);
-if (!$url){
-    echo "<span style='height:30px; color:#A9B7C6; line-height: 1px; text-align:left'><b>暂无日志</b></span>";
-    die();
-}
+
 $ym      = !empty($_GET['ym']) ? $_GET['ym'] : $ym;
 $day     = !empty($_GET['day']) ? $_GET['day'] : $day;
 $url     = !empty($_GET['url']) ? $_GET['url'] : $url;
 $lines   = !empty($_GET['lines']) ? $_GET['lines'] : 20;
 $fileUrl = "http://log.{$url}.sgtimes.cn/{$ym}/{$day}_error.log";
 $file    = fopen($fileUrl, 'r');
-//
+if (!$url || !$file){
+    echo "<span style='height:30px; color:#A9B7C6; line-height: 1px; text-align:left'><b>暂无日志</b></span>";
+    die();
+}
 
 $arr = [];
 $i   = 0;
@@ -113,4 +113,9 @@ foreach ($arr as $k => $item) {
             <span style='height:30px; color:#A9B7C6; line-height: 1px; text-align:left'><b>$item</b></span> </p>";
 }
 echo '</body>';
+
+function dd($data){
+    var_dump($data);
+    exit();
+}
 ?>
